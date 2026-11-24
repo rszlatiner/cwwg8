@@ -7,7 +7,7 @@
     let ok = 0;
     for (const v of mod.vocab) {
       const s = (sentences?.[v[0]] || '').trim(); if (!s) continue;
-      const hasWord = R.words(s).some(x => stem(x) === stem(v[0].split(' ')[0]) || x.startsWith(stem(v[0].split(' ')[0])));
+      const hasWord = v[0].includes(' ') ? s.toLowerCase().includes(v[0].toLowerCase()) : R.words(s).some(x => stem(x) === stem(v[0]) || (stem(v[0]).length > 3 && x.startsWith(stem(v[0]))));
       const copied = [v[3], v[4], v[2]].some(e => e && s.toLowerCase().replace(/\W/g, '') === e.toLowerCase().replace(/\W/g, ''));
       if (hasWord && R.wc(s) >= 6 && !copied) ok++;
     }
